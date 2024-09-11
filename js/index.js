@@ -32,3 +32,26 @@ document.addEventListener("DOMContentLoaded", function() {
         navbar.appendChild(usuario);
     }
 });
+document.addEventListener("DOMContentLoaded", function() {
+    // Seleccionar el campo de búsqueda y los artículos
+    const searchInput = document.getElementById('searchInput');
+    const articles = document.querySelectorAll('.card');
+  
+    // Event listener para el campo de búsqueda
+    searchInput.addEventListener('input', function() {
+      const query = this.value.toLowerCase();
+      
+      // Filtrar los artículos
+      articles.forEach(article => {
+        const title = article.querySelector('h3').textContent.toLowerCase();
+        const description = article.querySelector('.card-text').textContent.toLowerCase();
+  
+        if (title.includes(query) || description.includes(query)) {
+          article.parentElement.style.display = ''; // Muestra el artículo
+        } else {
+          article.parentElement.style.display = 'none'; // Oculta el artículo
+        }
+      });
+    });
+  });
+  

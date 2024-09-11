@@ -254,22 +254,22 @@ input[type="submit"]:hover {
   border-color: blue;
 }
 
-#seccionAutos{
+#seccion{
   margin: auto;
   width: 100%;
 }
-#seccionAutos h1{
+#seccion h1{
   text-align: center;
   margin: 50px 0 50px 0;
 }
-#autos>div{
+#categoria>div{
   display: flex;
   margin: 50px 0 50px 0;
 }
-#autos img{
+#categoria img{
   max-height: 150px;
 }
-#autos>div>div{
+#categoria>div>div{
   margin: 0 0 0 20px;
   display: flex;
   flex-direction: column;
@@ -333,4 +333,50 @@ input[type="submit"]:hover {
   input[type="text"], input[type="password"] {
     padding: 0.5rem; 
   }
+}
+
+/* estilo para product-info.html */
+
+#detallesProductos {
+
+  background-color: #eaa336;
+  
+  }
+  
+  #detallesProductos h1 {
+    text-align: center;
+  }
+  
+  #detallesProductos .imagen-producto img {
+    width: 50%; 
+    height: auto; 
+    max-width: 400px; 
+    margin-right: 20px; 
+  }
+  
+  #detallesProductos .unidades-vendidas {
+    text-align: right; 
+    font-weight: bold; /* bold va a añadir un estilo de negrita */
+    margin-top: 10px; 
+  }
+
+/* Estilos para las imágenes secundarias */
+
+ #detallesProductos .imagenes-secundarias {
+  position: absolute;
+  top: 150px; 
+  right: 200px; 
+  width: 120px; /* Reducimos un poco el ancho de las imágenes secundarias */
+}
+
+#detallesProductos .imagenes-secundarias img {
+  width: 100%; 
+  height: auto;
+  margin-bottom: 10px; 
+}
+
+=======
+  /* Asegúrate de que el campo de búsqueda tenga un margen superior adecuado */
+#searchInput {
+  margin-top: 20px; /* Ajusta el valor según tus necesidades */
 }
