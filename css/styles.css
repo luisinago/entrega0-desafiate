@@ -1,3 +1,8 @@
+*{
+  font-family: 'DM Sans', sans-serif;
+}
+
+
 .jumbotron,
 .card-body,
 .container,
@@ -345,6 +350,7 @@ input[type="submit"]:hover {
   
   #detallesProductos h1 {
     text-align: center;
+    font-family: 'DM Sans', sans-serif;
   }
   
   #detallesProductos .imagen-producto img {
@@ -358,6 +364,7 @@ input[type="submit"]:hover {
     text-align: right; 
     font-weight: bold; /* bold va a añadir un estilo de negrita */
     margin-top: 10px; 
+    font-family: 'DM Sans', sans-serif;
   }
 
 /* Estilos para las imágenes secundarias */
@@ -375,8 +382,34 @@ input[type="submit"]:hover {
   margin-bottom: 10px; 
 }
 
-=======
+
   /* Asegúrate de que el campo de búsqueda tenga un margen superior adecuado */
 #searchInput {
   margin-top: 20px; /* Ajusta el valor según tus necesidades */
+}
+#productosRelacionados{
+  display: flex;
+  flex-wrap: wrap; /* Para que las tarjetas se envuelvan en una nueva línea si no hay suficiente espacio */
+  justify-content: flex-start;
+  gap: 1rem;
+}
+h5.usuario{
+  font-size: medium;
+  font-family: 'DM Sans', sans-serif;
+
+}
+div.fechaComentario{
+  font-size: small;
+  font-family: 'DM Sans', sans-serif;
+}
+div.comentario{
+  font-size: medium;
+  font-family: 'DM Sans', sans-serif;
+}
+h3{
+  font-size: medium;
+}
+
+.checked {
+  color: gold; /* O el color que prefieras */
 }

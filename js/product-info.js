@@ -46,6 +46,9 @@ fetchProductosInfo();  */
 let productoID = localStorage.getItem("productoID");
 let categoriaID = localStorage.getItem("categoriaID");
 
+/*let productosURL = {
+  `https://japceibal.github.io/emercado-api/cats_products/${categoriaId}.json`;
+}*/
 // Categorías con las URL de los JSON
 let categoriasURL = {
     101: "https://japceibal.github.io/emercado-api/cats_products/101.json",  // Autos
@@ -123,4 +126,146 @@ let fetchImagenesSecundarias = async (productoID) => {
 // Llamamos 
 fetchProductosInfo();
 
+  
+const JsonComentarios = `https://japceibal.github.io/emercado-api/products_comments/${productoID}.json`;
+let fetchOpiniones = async (productoID) => {
+      let response =  await fetch(JsonComentarios);
+      let comentarioData = await response.json();
+      let containerComentarios = document.getElementById('seccionComentarios');
+      comentarioData.forEach(comentarioData => {
+        let comentarioContenido = `<br>
+        <div class="comentario">
+        <h5 class="usuario"><strong>${comentarioData.user}</strong></h5>
+        <div class="comentario">${comentarioData.description}</div>
+        <span> ${generarEstrellas(comentarioData.score)}</span>
+        <div class="fechaComentario">${comentarioData.dateTime}</div>
+        <br>`;
+        containerComentarios.innerHTML += comentarioContenido;
+      })
+    };
 
+    fetchOpiniones(productoID);
+
+    /*function generarEstrellas(puntaje) {
+      let estrellas = '';
+      let rating = puntaje;
+  
+  
+      for (let i = 1; i <= 5; i++) {
+          if (i <= rating) {
+              estrellas += `<span class="fa fa-star checked"></span>`;
+          } else {
+              estrellas += `<span class="fa fa-star"></span>`;
+          }
+      }
+  
+  
+      return estrellas;
+  }
+      */
+
+//Espacio para que el usuario puntúe e ingrese comentario
+const stars = document.querySelectorAll('#star-rating span');
+stars.forEach((star, index) => {
+    star.addEventListener('click', () => {
+        stars.forEach((s, i) => {
+            if (i <= index) {
+                s.classList += 'fa fa-star checked';
+            } else {
+                s.classList = 'fa fa-star';
+            }
+        });
+    });
+});
+
+//Caja comentario
+
+    
+
+
+let fetchProductosRel = async () => {
+      let response =  await fetch(productosImagesURLs[productoID]);
+      let productoData = await response.json();
+      let relatedProductContainer = document.getElementById('productosRelacionados');
+          // Actualizamos el contenido en el HTML
+          productoData.relatedProducts.forEach(relatedProduct => {
+let contenidoRelP= `
+<div class="card border-dark mb-3" style="width: 12rem;" onclick="irAlProducto(${relatedProduct.id})">
+<img class="card-img-top" src="${relatedProduct.image}" alt="${relatedProduct.name}">
+<div class="card-body">
+    <h5 class="card-title">${relatedProduct.name}</h5>
+</div>
+</div>`;
+relatedProductContainer.innerHTML += contenidoRelP; 
+          
+         } )};
+
+fetchProductosRel();
+
+function irAlProducto(idproducto){
+ localStorage.setItem('productoID', idproducto);
+ window.location.href= 'product-info.html';
+}
+
+// Función para generar estrellas
+function generarEstrellas(calificacion) {
+    let estrellasHTML = '';
+    for (let i = 1; i <= 5; i++) {
+        estrellasHTML += `<span class="fa fa-star ${i <= calificacion ? 'checked' : ''}"></span>`;
+    }
+    return estrellasHTML;
+}
+
+// Evento para el botón "Enviar"
+document.querySelector('.btn-primary').addEventListener('click', function() {
+    const estrellas = document.querySelectorAll('#star-rating .fa-star');
+    let calificacion = 0;
+
+    estrellas.forEach((estrella, index) => {
+        if (estrella.classList.contains('checked')) {
+            calificacion = index + 1;
+        }
+    });
+
+    const comentario = document.getElementById('cajaComentario').value;
+    const fecha = new Date();
+    const año = fecha.getFullYear();
+    const mes = ("0" + (fecha.getMonth() + 1)).slice(-2); // Los meses en JavaScript van de 0 a 11
+    const día = ("0" + fecha.getDate()).slice(-2);
+    const horas = ("0" + fecha.getHours()).slice(-2);
+    const minutos = ("0" + fecha.getMinutes()).slice(-2);
+    const segundos = ("0" + fecha.getSeconds()).slice(-2);
+    
+    const fechaf = `${año}-${mes}-${día} ${horas}:${minutos}:${segundos}`;
+    
+
+
+    if (calificacion > 0 && comentario) {
+        // Agregar comentario a la lista
+        const listaComentarios = document.getElementById('seccionComentarios');
+        const nuevoComentario = document.createElement('div');
+        nuevoComentario.innerHTML = `<br>
+        <div class="comentario">
+        <h5 class="usuario"><strong>${localStorage.getItem("username")}</strong></h5>
+        <div class="comentario">${comentario}</div>
+        <span> ${generarEstrellas(calificacion)}</span>
+        <div class="fechaComentario">${fechaf}</div>
+        <br>`;
+        listaComentarios.appendChild(nuevoComentario);
+
+        // Limpiar campos
+        document.getElementById('cajaComentario').value = '';
+        estrellas.forEach(estrella => estrella.classList.remove('checked'));
+    } else {
+        alert("Por favor, selecciona una calificación y escribe un comentario.");
+    }
+});
+
+// Evento para seleccionar estrellas
+document.querySelectorAll('#star-rating .fa-star').forEach((estrella, index) => {
+    estrella.addEventListener('click', function() {
+        document.querySelectorAll('#star-rating .fa-star').forEach((s, i) => {
+            s.classList.toggle('checked', i <= index);
+        });
+    });
+});

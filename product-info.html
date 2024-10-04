@@ -10,6 +10,9 @@
   <link href="css/font-awesome.min.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -44,7 +47,7 @@
     
       <div id="detallesProductos" class="container mt-4">
         <h1></h1> 
-        <p> <strong>Categoria:</strong> </p><p class="categoria-producto"></p> 
+        <p> <strong>Categoría:</strong> </p><p class="categoria-producto"></p> 
         <div class="imagen-producto">
           <img src="" alt="Imagen del producto">
         </div>
@@ -56,9 +59,34 @@
       </div>
         <p class="unidades-vendidas"></p> 
       </div>
-      
-      
 
+    <div class= "container" id="seccionComentarios">
+      <div class="h6"><strong>Opinión de los usuarios</strong></div>
+      <div id="listaComentarios"></div>
+    </div>
+
+      <!-- Lugar para poner comentario y puntuación -->
+<div id="comentarYPuntuar" class="container" style="margin: 1em auto;">
+  <h6 style="margin-bottom: 1em;"><strong>¿Qué te pareció el producto?</strong></h6>
+  <div id="star-rating" style="margin-bottom: 0.8em;">
+    <span class="fa fa-star"></span>
+    <span class="fa fa-star"></span>
+    <span class="fa fa-star"></span>
+    <span class="fa fa-star"></span>
+    <span class="fa fa-star"></span>
+  </div>
+
+  <div id="comentario">
+    <textarea id="cajaComentario" placeholder="Escribir comentario..." style="background-color: white; border-radius: 0.5em; width: 50%; height: 10em; padding: 0.5em; display: flex; align-items: flex-start;"></textarea>
+    <button type="submit" class="btn btn-primary" style="display: flex; margin-top: 0.5em;">Enviar</button>
+  </div>
+</div>
+
+
+      <div id="productosRelacionados" class="container">
+        <h3 style="margin-top: 1.5em;"><strong>Productos Relacionados</strong></h3>
+        </div>
+      </div>
 
   </main>
   <footer class="text-muted">
