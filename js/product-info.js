@@ -2,53 +2,10 @@ if (localStorage.getItem("usuario") && localStorage.getItem("contraseña")){ doc
 }
 
 
-
-
-/* let productoID = localStorage.getItem("productoID");
-let categoriaID = localStorage.getItem("categoriaID");
-
-// Categorías con las URL de los JSON
-let categoriasURL = {
-  101: "https://japceibal.github.io/emercado-api/cats_products/101.json",  // Autos
-  102: "https://japceibal.github.io/emercado-api/cats_products/102.json",  // Juguetes
-  103: "https://japceibal.github.io/emercado-api/cats_products/103.json",  // Muebles
-  105: "https://japceibal.github.io/emercado-api/cats_products/105.json"   // Computadoras
-};
-
-// fetch según categoría seleccionada
-let fetchProductosInfo = async () => {
-  if (categoriaID && categoriasURL[categoriaID]) {
-    let response = await fetch(categoriasURL[categoriaID]);
-    let datos = await response.json();
-
-    // Buscamos el producto por su ID dentro del JSON
-    let producto = datos.products.find(p => p.id == productoID);
-
-    if (producto) {
-      // Actualizamos el contenido en el HTML
-      document.querySelector('h1').innerText = producto.name;
-      document.querySelector('.imagen-producto img').src = producto.image;
-      document.querySelector('.descripcion-producto p').innerText = producto.description;
-
-      // Actualizamos la categoría y las unidades vendidas
-      document.querySelector('.categoria-producto').innerText = datos.catName;  // Nombre de la categoría
-      document.querySelector('.unidades-vendidas').innerText = `Unidades vendidas: ${producto.soldCount}`;  
-    } else {
-      console.log('Producto no encontrado');
-    }
-  } else {
-    console.log('Categoría no encontrada');
-  }
-};
-
-fetchProductosInfo();  */
-
 let productoID = localStorage.getItem("productoID");
 let categoriaID = localStorage.getItem("categoriaID");
 
-/*let productosURL = {
-  `https://japceibal.github.io/emercado-api/cats_products/${categoriaId}.json`;
-}*/
+
 // Categorías con las URL de los JSON
 let categoriasURL = {
     101: "https://japceibal.github.io/emercado-api/cats_products/101.json",  // Autos
@@ -146,23 +103,7 @@ let fetchOpiniones = async (productoID) => {
 
     fetchOpiniones(productoID);
 
-    /*function generarEstrellas(puntaje) {
-      let estrellas = '';
-      let rating = puntaje;
-  
-  
-      for (let i = 1; i <= 5; i++) {
-          if (i <= rating) {
-              estrellas += `<span class="fa fa-star checked"></span>`;
-          } else {
-              estrellas += `<span class="fa fa-star"></span>`;
-          }
-      }
-  
-  
-      return estrellas;
-  }
-      */
+ 
 
 //Espacio para que el usuario puntúe e ingrese comentario
 const stars = document.querySelectorAll('#star-rating span');
@@ -170,9 +111,9 @@ stars.forEach((star, index) => {
     star.addEventListener('click', () => {
         stars.forEach((s, i) => {
             if (i <= index) {
-                s.classList += 'fa fa-star checked';
+                s.classList.add('checked');
             } else {
-                s.classList = 'fa fa-star';
+                s.classList.remove('checked');
             }
         });
     });
@@ -217,7 +158,7 @@ function generarEstrellas(calificacion) {
 }
 
 // Evento para el botón "Enviar"
-document.querySelector('.btn-primary').addEventListener('click', function() {
+document.getElementById('botonEnviarCom').addEventListener('click', function() {
     const estrellas = document.querySelectorAll('#star-rating .fa-star');
     let calificacion = 0;
 
@@ -259,6 +200,7 @@ document.querySelector('.btn-primary').addEventListener('click', function() {
     } else {
         alert("Por favor, selecciona una calificación y escribe un comentario.");
     }
+
 });
 
 // Evento para seleccionar estrellas
@@ -269,3 +211,45 @@ document.querySelectorAll('#star-rating .fa-star').forEach((estrella, index) => 
         });
     });
 });
+
+let botonComprar = document.getElementById('botonComprar'); //evento de presionar el boton
+
+botonComprar.addEventListener('click', ()=>{
+    agregarAlCarrito(); //ejecuto agregar al carrito
+})
+
+let producto= localStorage.getItem('productoID')
+let usuarioAc = localStorage.getItem('username');
+let carrito = JSON.parse(localStorage.getItem(`carritoCompras${usuarioAc}`)) || [];
+
+function agregarAlCarrito (){
+    fetch(`https://japceibal.github.io/emercado-api/products/${producto}.json`) //trae la info del producto
+    .then(response => response.json())
+    .then(data => {
+        let {name, cost, currency, images} = data; //desestructuro
+        if(currency == "USD"){
+            cost= cost * 40;
+            currency= "UYU"
+        }//si la moneda es en dolares, la convierto a pesos
+        let prodCarrito = {
+            nombre: name,
+            costo: cost,
+            cantidad: 1,
+            moneda: currency,
+            imagen: images[0]
+
+        }; //creo el objeto del prod para el carrito
+        let prodExiste = carrito.find(item => item.nombre === name); //me fijo si en el carrito ya esta ese mismo prod
+        if(prodExiste){
+            prodExiste.cantidad += 1; //si esta, no agrego el objeto de nuevo, solo le sumo uno a la cantidad
+        }else{
+            carrito.push(prodCarrito); // si no esta, agrego el objeto nuevo
+         } 
+            localStorage.setItem(`carritoCompras${usuarioAc}`, JSON.stringify(carrito)); //los convierte en un objeto json para guardar en local storage y le paso el user para que cada carrito sea individual
+            
+    })
+    .catch(error => console.error('Error al cargar los productos:', error));
+
+
+    window.location.href='cart.html'; //me manda al carrito al presionar comprar
+}
