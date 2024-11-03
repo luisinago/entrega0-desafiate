@@ -13,6 +13,42 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
+
+
+
+
+<style>
+
+   /* diseño responsive para los detalles del producto  */
+
+  .imagenes-secundarias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center; 
+  }
+
+  .imagenes-secundarias img {
+    max-width: 100%;
+    height: auto;
+    flex: 1 1 calc(33.333% - 10px); 
+  }
+
+  
+  @media (max-width: 768px) {
+    .imagenes-secundarias img {
+      flex: 1 1 calc(50% - 10px); 
+    }
+  }
+
+  @media (max-width: 576px) {
+    .imagenes-secundarias img {
+      flex: 1 1 calc(100% - 10px); 
+    }
+  }
+</style>
+
+
 </head>
 
 <body>
@@ -47,12 +83,16 @@
     
       <div id="detallesProductos" class="container mt-4">
         <h1></h1> 
-        <p> <strong>Categoría:</strong> </p><p class="categoria-producto"></p> 
+        <p> <strong>Categoría:</strong> </p><p class="categoria-producto" id= 'cate'></p> 
         <div class="imagen-producto">
           <img src="" alt="Imagen del producto">
         </div>
         <div class="descripcion-producto">
           <p></p> 
+        </div>
+        <!--Botón de comprar--> 
+        <div class="boton">
+          <button id="botonComprar"type="button" class="btn btn-success" style="margin-bottom:10px;">Comprar</button>
         </div>
         <div class="imagenes-secundarias">
           <!-- Aca se muestran las imagenes secundarias -->
@@ -78,7 +118,7 @@
 
   <div id="comentario">
     <textarea id="cajaComentario" placeholder="Escribir comentario..." style="background-color: white; border-radius: 0.5em; width: 50%; height: 10em; padding: 0.5em; display: flex; align-items: flex-start;"></textarea>
-    <button type="submit" class="btn btn-primary" style="display: flex; margin-top: 0.5em;">Enviar</button>
+    <button type="submit" class="btn btn-primary" id="botonEnviarCom" style="display: flex; margin-top: 0.5em;">Enviar</button>
   </div>
 </div>
 
